@@ -1,0 +1,31 @@
+# Unity .gitignore
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Visual Studio
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build results (кроме WebGL)
+*.apk
+*.aab
+*.unitypackage
+
+# Исключаем WebGL сборку из игнора
+!WebGLBuild/
+
+# Visual Studio Code
+.vscode/

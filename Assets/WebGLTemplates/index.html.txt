@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Your Game Title</title>
+    <style>
+      body { margin: 0; padding: 0; background: #000; } /* Черный фон для полос */
+      #unity-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; } /* Центрируем Canvas */
+      #unity-canvas { background: #fff; } /* Белый фон для контента игры */
+    </style>
+  </head>
+  <body>
+    <div id="unity-container">
+      <canvas id="unity-canvas"></canvas>
+    </div>
+    <script src="Build/YourGameName.loader.js"></script>
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+
+      var buildUrl = "Build/YourGameName";
+      var loaderUrl = buildUrl + ".loader.js";
+      var config = {
+        dataUrl: buildUrl + ".data",
+        frameworkUrl: buildUrl + ".framework.js",
+        codeUrl: buildUrl + ".wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "YourCompanyName",
+        productName: "YourGameName",
+        productVersion: "0.1",
+      };
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config).then((unityInstance) => {
+          // Игра запущена
+        });
+      }
+      document.body.appendChild(script);
+
+      // === Адаптация размера Canvas ===
+      function resizeCanvas() {
+        var gameWidth = 9; // Ширина (9:16)
+        var gameHeight = 16; // Высота (9:16)
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+
+        var targetWidth = windowWidth;
+        var targetHeight = windowWidth * gameHeight / gameWidth; // Вычисляем высоту, сохраняя пропорции
+
+        if (targetHeight > windowHeight) {
+          // Если вычисленная высота больше высоты окна, используем высоту окна
+          targetHeight = windowHeight;
+          targetWidth = windowHeight * gameWidth / gameHeight; // Вычисляем ширину
+        }
+
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+
+        // Применяем стили для центрирования и полос
+        container.style.width = windowWidth + 'px';
+        container.style.height = windowHeight + 'px';
+        container.style.display = 'flex';
+        container.style.justifyContent = 'center';
+        container.style.alignItems = 'center';
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas(); // Вызвать при загрузке страницы
+    </script>
+  </body>
+</html>
